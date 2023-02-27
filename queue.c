@@ -1,10 +1,12 @@
 #include "queue.h"
 
-void createQueue(queue *q)
+queue *createQueue()
 {
+    queue *q = (queue *) malloc(sizeof(queue));
     q->size = 0;
     q->head = NULL;
     q->tail = NULL;
+    return q;
 }
 
 void destroyQueue(queue *q)
@@ -38,11 +40,10 @@ int isFull(queue *q)
 
 void enqueue(queue *q, Qdata_type value)
 {
-    if(isFull(q) == 0)
+    node *item;
+    item = (node*) malloc(sizeof(node));
+    if(isFull(q) == 0 && item != NULL)
     {
-        node *item;
-
-        item = (node*) malloc(sizeof(node));
         item->data = value;
         item->next = NULL;
         if(isEmpty(q) == 0)
@@ -59,7 +60,7 @@ void enqueue(queue *q, Qdata_type value)
     }
     else
     {
-        printf("The list is full!\n");
+        return;
     }
 }
 
@@ -85,7 +86,6 @@ Qdata_type dequeue(queue *q)
     }
     else
     {
-        printf("The queue is empty!\n");
         return 0;
     }
 }
@@ -94,7 +94,6 @@ Qdata_type firstItem(queue *q)
 {
     if(isEmpty(q) == 1)
     {
-        printf("The queue is empty!\n");
         return 0;
     }
     else
@@ -102,3 +101,4 @@ Qdata_type firstItem(queue *q)
         return (q->head->data);
     }
 }
+
